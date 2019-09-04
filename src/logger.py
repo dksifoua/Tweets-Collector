@@ -1,20 +1,19 @@
 import sys
 import logging
 
+from src.singleton import Singleton
 
-class Logger:
-    FORMAT = '%(asctime)s - %(levelname)s - (%(threadName)s) - %(message)s'
-    instance = None
+
+class Logger(Singleton):
+    __FORMAT = '%(asctime)s - %(levelname)s - (%(threadName)s) - %(message)s'
 
     def __init__(self, name: str = __name__):
-        if self.__class__.instance is None:
-            raise Exception('Tried to allocate a second instance of a singleton.\nUse getInstance() instead.')
-            sys.exit(-1)
+        super().__init__()
 
         logger = logging.getLogger(name)
         logger.setLevel(logging.DEBUG)
 
-        log_formatter = logging.Formatter(self.__class__.FORMAT)
+        log_formatter = logging.Formatter(self.__class__.__FORMAT)
 
         console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setFormatter(log_formatter)
@@ -30,28 +29,28 @@ class Logger:
         logger.addHandler(file_handler)
         logger.addHandler(console_handler)
 
-        self.__class__.instance = logger
+        self.__logger = logger
 
-    @classmethod
-    def get_instance(cls, name: str = __name__):
-        if cls.instance is None:
-            return cls(name)
-        return cls.instance
+        self.__class__.__instance = self
+
+    @property
+    def logger(self):
+        return self.__logger
 
     def debug(self, message: str):
-        self.__class__.instance.debug(message)
+        self.logger.debug(message)
 
     def info(self, message: str):
-        self.__class__.instance.info(message)
+        self.logger.info(message)
 
     def warn(self, message: str):
-        self.__class__.instance.warn(message)
+        self.logger.warning(message)
 
     def error(self, message: str):
-        self.__class__.instance.error(message)
+        self.logger.error(message)
 
     def critical(self, message: str):
-        self.__class__.instance.critical(message)
+        self.logger.critical(message)
 
     def exception(self, message: str):
-        self.__class__.instance.exception(message)
+        self.logger.exception(message)
