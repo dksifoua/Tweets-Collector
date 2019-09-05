@@ -31,6 +31,10 @@ class TwitterStream:
         self.__class__._id += 1
 
     @property
+    def topic(self):
+        return self.__topic
+
+    @property
     def stream(self):
         return self.__stream
 
