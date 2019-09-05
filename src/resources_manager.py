@@ -5,13 +5,15 @@ from typing import Dict, List, Any
 import tweepy
 
 from src.singleton import Singleton
+from src.token import Token
 from src.logger import Logger
 
 
 class ResourcesManager(Singleton):
 
     WOEID = 23424977  # WOEID for USA
-    STOCKS = ['AAPL', 'MSFT', 'GOOGL', 'GS', 'WMT']
+    STOCKS = ['AAPL', 'MSFT', 'GOOGL']  # , 'GS', 'WMT'
+    BATCH_SIZE = 390
 
     def __init__(self):
         super().__init__()
@@ -23,7 +25,7 @@ class ResourcesManager(Singleton):
 
         # Load financial tracks
         self.__financial_tracks = {}
-        for track_type in ['acronyms', 'phrases', 'tracks']:
+        for track_type in ['acronyms', 'phrases', 'words']:
             self.__financial_tracks[track_type] = self.__class__.load_tracks('Financial', track_type)
 
         #   Define trend tracks
@@ -51,12 +53,21 @@ class ResourcesManager(Singleton):
         self.__trend_tracks = tracks
 
     @staticmethod
-    def get_trend_tracks(api: tweepy.API) -> List[str]:
+    def create_token(token: Dict[str, str]) -> Token:
+        return Token(api_key=token['api_key'], api_secret=token['api_secret'],
+                     access_key=token['access_key'], access_secret=token['access_secret'])
+
+    def get_trend_tracks(self, token: Token):
+        auth = tweepy.OAuthHandler(token.api_key, token.api_secret)
+        auth.set_access_token(token.access_key, token.access_secret)
+        api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+
         if not api:
             print('Error while connecting to Twitter API')
             sys.exit(-1)
+
         trends = api.trends_place(ResourcesManager.WOEID)
-        return [' ' + trend['name'] + ' ' for trend in trends[0]['trends']]
+        self.__trend_tracks = [' ' + trend['name'] + ' ' for trend in trends[0]['trends']]
 
     @staticmethod
     def load_tokens() -> Dict[str, str]:
