@@ -1,5 +1,6 @@
 import sys
 import json
+import threading
 from typing import Dict, List, Any
 
 import tweepy
@@ -14,6 +15,7 @@ class ResourcesManager(Singleton):
     WOEID = 23424977  # WOEID for USA
     STOCKS = ['AAPL', 'MSFT', 'GOOGL']  # , 'GS', 'WMT'
     BATCH_SIZE = 390
+    LOCK = threading.RLock()
 
     def __init__(self):
         super().__init__()
