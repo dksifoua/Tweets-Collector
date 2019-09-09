@@ -53,7 +53,7 @@ class TwitterStreamManager(Singleton):
         for stream in self.__streams:
             stream.start()
 
-    def update_trend_track(self, time_interval: int):
+    def update_trend_tracks(self, time_interval: int):
         def _update_trend_track(streams, _time_interval):
             while True:
                 time.sleep(_time_interval)

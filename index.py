@@ -20,4 +20,4 @@ if __name__ == '__main__':
 
     streams_manager.init_streams()
     streams_manager.start_streams()
-    streams_manager.update_trend_track(time_interval=3600)
+    streams_manager.update_trend_tracks(time_interval=3600)

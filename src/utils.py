@@ -5,7 +5,7 @@ def extract_features(raw_data):
     tweet = {}
 
     try:
-        tweet['created_at'] = datetime.strptime(raw_data['created_at'], '%a %b %d %H:%M:%S %z %Y')
+        tweet['created_at'] = raw_data['created_at']  # datetime.strptime(, '%a %b %d %H:%M:%S %z %Y')
         tweet['id'] = raw_data['id']
         tweet['user_name'] = raw_data['user']['name']
         tweet['user_screen_name'] = raw_data['user']['screen_name']

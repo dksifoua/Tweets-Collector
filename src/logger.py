@@ -5,7 +5,7 @@ from src.singleton import Singleton
 
 
 class Logger(Singleton):
-    __FORMAT = '%(asctime)s - %(levelname)s - (%(threadName)s) - %(message)s'
+    __FORMAT = '%(asctime)s - %(levelname)s - [%(threadName)s] - %(message)s'
 
     def __init__(self, name: str = __name__):
         super().__init__()
@@ -38,19 +38,19 @@ class Logger(Singleton):
         return self.__logger
 
     def debug(self, message: str):
-        self.logger.debug(message)
+        self.__logger.debug(message)
 
     def info(self, message: str):
-        self.logger.info(message)
+        self.__logger.info(message)
 
     def warn(self, message: str):
-        self.logger.warning(message)
+        self.__logger.warning(message)
 
     def error(self, message: str):
-        self.logger.error(message)
+        self.__logger.error(message)
 
     def critical(self, message: str):
-        self.logger.critical(message)
+        self.__logger.critical(message)
 
     def exception(self, message: str):
-        self.logger.exception(message)
+        self.__logger.exception(message)

@@ -16,7 +16,7 @@ class TwitterStreamListener(tweepy.streaming.StreamListener):
 
         self.__id = id_
         self.__topic = topic
-        # self.__producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
+        self.__producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
     def on_connect(self):
         Logger.get_instance().info(f'Stream listener is connected Twitter for topic {self.__topic}-{self.__id}')
@@ -38,8 +38,30 @@ class TwitterStreamListener(tweepy.streaming.StreamListener):
 
         # TODO
         #   Filter by tracks
+        if self.__topic == 'Financial':
+            tracks = rm.financial_tracks
+            contains_acronyms = [*map(tweet['text'].__contains__, tracks['acronyms'])]
+            contains_phrases = [
+                *map(tweet['text'].lower().__contains__, [*map(lambda x: x.lower(), tracks['phrases'])])]
+            contains_words = [*map(tweet['text'].lower().__contains__, [*map(lambda x: x.lower(), tracks['words'])])]
+            contains = any(contains_acronyms) or any(contains_phrases) or any(contains_words)
+        elif self.__topic == 'Trend':
+            tracks = rm.trend_tracks
+            contains_ = [*map(tweet['text'].__contains__, tracks)]
+            contains_lower = [*map(tweet['text'].lower().__contains__, [*map(lambda x: x.lower(), tracks)])]
+            contains = any(contains_) or any(contains_lower)
+        elif 'Stock' in self.__topic:
+            contains = True
+        else:
+            Logger.get_instance().error(f'unknown topic: {self.__topic}')
+            sys.exit(-1)
 
-        # self.__producer.send(topic=self.__topic, value=str(tweet).encode('utf-8'), key=self.__topic.encode('utf-8'))
+        if contains is False:
+            # TODO
+            #   Filter by stock tracks
+            return True
+
+        self.__producer.send(topic=self.__topic, value=json.dumps(tweet).encode('utf-8'), key=self.__topic.encode('utf-8'))
         Logger.get_instance().debug(
             f"Topic: {self.__topic} | Created at: {tweet['created_at']} | User: {tweet['user_screen_name']}\n"
             f"{tweet['text']}\n"
