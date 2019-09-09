@@ -2,8 +2,12 @@ import sys
 import signal
 
 from src.twitter_stream_manager import TwitterStreamManager
-from src.resources_manager import ResourcesManager
 from src.logger import Logger
+
+# TODO
+#   Review stock tracks
+#   Use confluent-kafka-python (more faster) instead of python-kafka
+#   Use Async Await for logging and sending messages
 
 
 if __name__ == '__main__':
@@ -16,7 +20,6 @@ if __name__ == '__main__':
     signal.signal(signal.SIGINT, signal_handler)
 
     streams_manager = TwitterStreamManager.get_instance()
-    # print(ResourcesManager.get_instance().stock_tracks['AAPL'])
 
     streams_manager.init_streams()
     streams_manager.start_streams()

@@ -85,7 +85,7 @@ class ResourcesManager(Singleton):
         try:
             with open(f'./resources/tracks/{folder}/{filename}.txt', 'r') as file:
                 tracks = file.readlines()
-                tracks = [*map(lambda track: track.split('\n')[0], tracks)]
+                tracks = [*map(lambda track: track.strip(), tracks)]
                 tracks = [*set(tracks)]
                 return tracks
         except Exception as e:

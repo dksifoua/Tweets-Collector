@@ -1,5 +1,6 @@
 import sys
 import json
+import asyncio
 
 import tweepy
 from kafka import KafkaProducer
@@ -36,8 +37,7 @@ class TwitterStreamListener(tweepy.streaming.StreamListener):
         except KeyError:
             return True
 
-        # TODO
-        #   Filter by tracks
+        # Strong filter to drop out noises
         if self.__topic == 'Financial':
             tracks = rm.financial_tracks
             contains_acronyms = [*map(tweet['text'].__contains__, tracks['acronyms'])]
@@ -51,14 +51,18 @@ class TwitterStreamListener(tweepy.streaming.StreamListener):
             contains_lower = [*map(tweet['text'].lower().__contains__, [*map(lambda x: x.lower(), tracks)])]
             contains = any(contains_) or any(contains_lower)
         elif 'Stock' in self.__topic:
-            contains = True
+            stock = self.__topic.split('.')[1]
+            tracks = rm.stock_tracks[stock]
+            contains_ = [*map(tweet['text'].__contains__, tracks)]
+            contains_lower = [*map(tweet['text'].lower().__contains__, [*map(lambda x: x.lower(), tracks)])]
+            contains_name = [*map(tweet['user_name'].__contains__, tracks)]
+            contains_screen_name = [*map(tweet['user_screen_name'].__contains__, tracks)]
+            contains = any(contains_) or any(contains_lower) or any(contains_name) or any(contains_screen_name)
         else:
             Logger.get_instance().error(f'unknown topic: {self.__topic}')
             sys.exit(-1)
 
         if contains is False:
-            # TODO
-            #   Filter by stock tracks
             return True
 
         self.__producer.send(topic=self.__topic, value=json.dumps(tweet).encode('utf-8'), key=self.__topic.encode('utf-8'))
