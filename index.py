@@ -10,14 +10,19 @@ from src.logger import Logger
 #   Use Async Await for logging and sending messages
 
 
-if __name__ == '__main__':
-    def signal_handler(sig, frame):
-        global streams_manager
-        streams_manager.stop_streams()
-        Logger.get_instance().critical('Program stopped thank to Ctrl^C command!')
-        sys.exit(0)
+def signal_handler(sig, frame):
+    global streams_manager
+    streams_manager.stop_streams()
+    Logger.get_instance().critical('Program stopped thank to Ctrl^C command!')
+    sys.exit(0)
 
-    signal.signal(signal.SIGINT, signal_handler)
+
+signal.signal(signal.SIGINT, signal_handler)
+
+
+if __name__ == '__main__':
+    from src.resources_manager import ResourcesManager
+    print(ResourcesManager.get_instance().stock_tracks['AAPL'])
 
     streams_manager = TwitterStreamManager.get_instance()
 

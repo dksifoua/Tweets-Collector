@@ -59,13 +59,14 @@ class TwitterStreamListener(tweepy.streaming.StreamListener):
             contains_screen_name = [*map(tweet['user_screen_name'].__contains__, tracks)]
             contains = any(contains_) or any(contains_lower) or any(contains_name) or any(contains_screen_name)
         else:
-            Logger.get_instance().error(f'unknown topic: {self.__topic}')
+            Logger.get_instance().error(f'Unknown topic: {self.__topic}')
             sys.exit(-1)
 
         if contains is False:
             return True
 
-        self.__producer.send(topic=self.__topic, value=json.dumps(tweet).encode('utf-8'), key=self.__topic.encode('utf-8'))
+        self.__producer.send(topic=self.__topic, value=json.dumps(tweet).encode('utf-8'),
+                             key=self.__topic.encode('utf-8'))
         Logger.get_instance().debug(
             f"Topic: {self.__topic} | Created at: {tweet['created_at']} | User: {tweet['user_screen_name']}\n"
             f"{tweet['text']}\n"

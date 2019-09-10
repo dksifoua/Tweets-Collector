@@ -40,7 +40,7 @@ class TwitterStreamManager(Singleton):
 
         for k, v in stock_tracks.items():
             token = ResourcesManager.create_token(tokens[str(i)])
-            streams.append(TwitterStream(token=token, topic=f'Stock.{k}', tracks=v[j]))
+            streams.append(TwitterStream(token=token, topic=f'Stock.{k}', tracks=v))
             i += 1
 
         token = ResourcesManager.create_token(tokens[str(i)])
