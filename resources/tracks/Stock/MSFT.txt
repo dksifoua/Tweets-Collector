@@ -1,0 +1,123 @@
+#Dynamics365
+#Microsoft365
+#MicrosoftFlow
+#MicrosoftTeams
+#Office365
+#PowerApps
+#PowerBI
+$MSFT
+$msft
+@InsideSkype
+@Microsoft
+@Microsoft365
+@Surface
+@Windows
+@MicrosoftHelps
+#SQLServer
+@SQLServer
+@Office
+@MSFTNews
+@MSFTResearch
+ MSFT 
+ Skype for Business 
+ bill gates 
+ business microsoft 
+ microsoft Publisher 
+ microsoft Windows 
+ microsoft azure 
+ microsoft band 
+ microsoft billysoft 
+ microsoft bing 
+ microsoft ceo 
+ microsoft chart 
+ microsoft cloud business 
+ microsoft corp 
+ microsoft corporation stock 
+ microsoft cortana 
+ microsoft deal 
+ microsoft dividend 
+ microsoft dividend date 
+ microsoft dividend rate 
+ microsoft dynamics 
+ microsoft earnings 
+ microsoft employees 
+ microsoft ex dividend date 
+ microsoft excel 
+ microsoft futures 
+ microsoft hololens 
+ microsoft internet explorer 
+ microsoft last earnings 
+ microsoft lumia 
+ microsoft maluuba 
+ microsoft microfucked 
+ microsoft microsludge 
+ microsoft onedrive 
+ microsoft onenote 
+ microsoft option chain 
+ microsoft options 
+ microsoft options chain 
+ microsoft outlook 
+ microsoft outstanding shares 
+ microsoft partners 
+ microsoft powerpoint 
+ microsoft price 
+ microsoft releases 
+ microsoft sharepoint 
+ microsoft shares 
+ microsoft skype 
+ microsoft stock 
+ microsoft stock market 
+ microsoft stock news 
+ microsoft stock price 
+ microsoft stock price today 
+ microsoft stock quote 
+ microsoft stock update 
+ microsoft stocks 
+ microsoft store #Microsoft365 
+ microsoft surface 
+ microsoft surface book 
+ microsoft surface hub 
+ microsoft surface phone 
+ microsoft surface studio 
+ microsoft surface tab 
+ microsoft ticker 
+ microsoft visual studio 
+ microsoft windoze 
+ microsoft x-box 
+ microsoft xbox 
+ msft 
+ msft chart 
+ msft closing values 
+ msft dividend 
+ msft dividend date 
+ msft dividend rate 
+ msft earnings 
+ msft ex dividend date 
+ msft futures 
+ msft last earnings 
+ msft opening values 
+ msft option chain 
+ msft options 
+ msft options chain 
+ msft outstanding shares 
+ msft price 
+ msft shares 
+ msft stock 
+ msft stock market 
+ msft stock news 
+ msft stock price 
+ msft stock price today 
+ msft stock quote 
+ msft stock update 
+ msft stocks 
+ msft ticker 
+ new microsoft 
+ new xbox 
+ nokia lumia 
+ satya nadella 
+ stock msft 
+ windows update 
+ xbox ones 
+#AzureSQL
+#SQLServer2019
+#SQLServer
