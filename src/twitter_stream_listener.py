@@ -17,7 +17,8 @@ class TwitterStreamListener(tweepy.streaming.StreamListener):
 
         self.__id = id_
         self.__topic = topic
-        self.__producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
+        # Asynchronous by default
+        self.__producer = KafkaProducer(bootstrap_servers=ResourcesManager.BOOTSTRAP_SERVERS)
 
     def on_connect(self):
         Logger.get_instance().info(f'Stream listener is connected Twitter for topic {self.__topic}-{self.__id}')

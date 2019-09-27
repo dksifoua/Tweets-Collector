@@ -12,9 +12,12 @@ from src.logger import Logger
 
 class ResourcesManager(Singleton):
 
+    BOOTSTRAP_SERVERS = ['localhost:9092']
+    STOCKS = ['AAPL']  # , 'MSFT', 'GOOGL', 'GS', 'WMT'
+
     WOEID = 23424977  # WOEID for USA
-    STOCKS = ['AAPL', 'MSFT', 'GOOGL']  # , 'GS', 'WMT'
     BATCH_SIZE = 390
+
     LOCK = threading.RLock()
 
     def __init__(self):
