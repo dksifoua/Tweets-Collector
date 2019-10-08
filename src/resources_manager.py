@@ -13,7 +13,7 @@ from src.logger import Logger
 class ResourcesManager(Singleton):
 
     BOOTSTRAP_SERVERS = ['localhost:9092']
-    STOCKS = ['AAPL']  # , 'MSFT', 'GOOGL', 'GS', 'WMT'
+    STOCKS = ['AAPL', 'MSFT', 'GOOGL', 'GS', 'WMT']
 
     WOEID = 23424977  # WOEID for USA
     BATCH_SIZE = 390

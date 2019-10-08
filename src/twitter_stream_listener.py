@@ -1,12 +1,11 @@
 import sys
 import json
-import asyncio
 
 import tweepy
 from kafka import KafkaProducer
 
 from src.resources_manager import ResourcesManager
-from src.utils import extract_features
+from src.utils import Tweet
 from src.logger import Logger
 
 
@@ -30,7 +29,7 @@ class TwitterStreamListener(tweepy.streaming.StreamListener):
         # Extract features
         try:
             if raw_data['lang'] == 'en':
-                tweet = extract_features(raw_data)
+                tweet = Tweet.extract_features(raw_data)
                 if tweet is None:
                     return True
             else:
@@ -66,6 +65,7 @@ class TwitterStreamListener(tweepy.streaming.StreamListener):
         if contains is False:
             return True
 
+        tweet['text'] = Tweet.process_text(tweet['text'])
         self.__producer.send(topic=self.__topic, value=json.dumps(tweet).encode('utf-8'),
                              key=self.__topic.encode('utf-8'))
         Logger.get_instance().debug(
