@@ -65,13 +65,18 @@ class TwitterStreamListener(tweepy.streaming.StreamListener):
         if contains is False:
             return True
 
-        tweet['text'] = Tweet.process_text(tweet['text'])
-        self.__producer.send(topic=self.__topic, value=json.dumps(tweet).encode('utf-8'),
-                             key=self.__topic.encode('utf-8'))
-        Logger.get_instance().debug(
-            f"Topic: {self.__topic} | Created at: {tweet['created_at']} | User: {tweet['user_screen_name']}\n"
-            f"{tweet['text']}\n"
-            f"===============================================================================================")
+        # tweet['text'] = Tweet.process_text(tweet['text'])
+
+        try:
+            self.__producer.send(topic=self.__topic, value=json.dumps(tweet).encode('utf-8'),
+                                 key=self.__topic.encode('utf-8'))
+            Logger.get_instance().debug(
+                f"Topic: {self.__topic} | Created at: {tweet['created_at']} | User: {tweet['user_screen_name']}\n"
+                f"{tweet['text']}\n"
+                f"===============================================================================================")
+        except Exception as e:
+            Logger.get_instance().exception(f'Exception occured => {e}')
+            sys.exit(-1)
 
     def on_error(self, status_code):
         Logger.get_instance().error(

@@ -12,8 +12,8 @@ from src.logger import Logger
 
 class ResourcesManager(Singleton):
 
-    BOOTSTRAP_SERVERS = ['localhost:9092']
-    STOCKS = ['AAPL', 'MSFT', 'GOOGL', 'GS', 'WMT']
+    BOOTSTRAP_SERVERS = None
+    STOCKS = None
 
     WOEID = 23424977  # WOEID for USA
     BATCH_SIZE = 390
