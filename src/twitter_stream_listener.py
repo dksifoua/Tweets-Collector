@@ -50,7 +50,7 @@ class TwitterStreamListener(tweepy.streaming.StreamListener):
             contains_ = [*map(tweet['text'].__contains__, tracks)]
             contains_lower = [*map(tweet['text'].lower().__contains__, [*map(lambda x: x.lower(), tracks)])]
             contains = any(contains_) or any(contains_lower)
-        elif 'Stock' in self.__topic:
+        elif 'Tweet' in self.__topic:
             stock = self.__topic.split('.')[1]
             tracks = rm.stock_tracks[stock]
             contains_ = [*map(tweet['text'].__contains__, tracks)]
@@ -65,8 +65,7 @@ class TwitterStreamListener(tweepy.streaming.StreamListener):
         if contains is False:
             return True
 
-        # tweet['text'] = Tweet.process_text(tweet['text'])
-
+        tweet['text'] = Tweet.process_text(tweet['text'])
         try:
             self.__producer.send(topic=self.__topic, value=json.dumps(tweet).encode('utf-8'),
                                  key=self.__topic.encode('utf-8'))
