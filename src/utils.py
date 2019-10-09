@@ -1,6 +1,4 @@
 import re
-import pytz
-from datetime import datetime
 
 
 class Tweet:
@@ -28,7 +26,6 @@ class Tweet:
 
         try:
             tweet['created_at'] = raw_data['created_at']
-            tweet['id'] = raw_data['id']
             tweet['user_name'] = raw_data['user']['name']
             tweet['user_screen_name'] = raw_data['user']['screen_name']
             tweet['user_favourites_count'] = raw_data['user']['favourites_count']
